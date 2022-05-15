@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  medo_redis:
+    command: redis-server /usr/local/etc/redis/redis.conf --requirepass ${REDIS_PASSWORD}
+    image: redis:alpine
+    container_name: medo_redis
+    volumes:
+      - ./conf/medo_redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - 6379:6379
+    restart: always
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  mysql-data:
+    driver: local
